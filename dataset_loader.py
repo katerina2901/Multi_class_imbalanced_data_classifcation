@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1GpP4wxPfIBx9d_Khkb9IQIwBTLM4iXH9
 """
 
+!pip install ucimlrepo
+
 # import libraries
 import numpy as np
 import pandas as pd
@@ -112,8 +114,8 @@ def load_dataset(name):
       X_cat = ['cp', 'fbs', 'restecg', 'exang', 'slope', 'thal']
       X = pd.get_dummies(X, columns = X_cat, drop_first = True)
 
-      y = y.drop([87, 166, 192, 266, 287, 302])
       y = data_set.data.targets
+      y = y.drop([87, 166, 192, 266, 287, 302])
 
     if name == 'Car_Evaluation':
       data_set = fetch_ucirepo(id=19)
