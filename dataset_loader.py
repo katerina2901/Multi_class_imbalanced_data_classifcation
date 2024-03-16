@@ -28,7 +28,7 @@ def load_dataset(name):
                  'Vertebral_Column', 'Differentiated_Thyroid_Cancer_Recurrence',
                  'Dermatology', 'Balance_Scale', 'Glass_Identification',
                  'Heart_Disease', 'Car_Evaluation', 'Thyroid_Disease', 'Yeast',
-                 'Page_Blocks_Classification', 'Statlog_Shuttle ', 'Covertype'
+                 'Page_Blocks_Classification', 'Statlog_Shuttle', 'Covertype'
                  ]
 
     if name not in list_of_names:
