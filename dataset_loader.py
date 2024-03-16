@@ -92,11 +92,10 @@ def load_dataset(name):
       # X[X.isnull().any(1)].index
       # Drop nan rows
       X = X.dropna()
-      X = X.reset_index()
 
       y = data_set.data.targets
       y = y.drop([33, 34, 35, 36, 262, 263, 264, 265])
-      y = y.reset_index()
+
 
     if name == 'Balance_Scale':
       data_set = fetch_ucirepo(id=12)
@@ -117,13 +116,12 @@ def load_dataset(name):
       X = data_set.data.features
       X[X.isnull().any(1)].index
       X = X.dropna()
-      X = X.reset_index()
       X_cat = ['cp', 'fbs', 'restecg', 'exang', 'slope', 'thal']
       X = pd.get_dummies(X, columns = X_cat, drop_first = True)
 
       y = data_set.data.targets
       y = y.drop([87, 166, 192, 266, 287, 302])
-      y = y.reset_index()
+
 
     if name == 'Car_Evaluation':
       data_set = fetch_ucirepo(id=19)
