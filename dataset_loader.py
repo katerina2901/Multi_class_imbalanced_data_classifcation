@@ -146,10 +146,23 @@ def load_dataset(name):
       y = data_set['target']
 
     if name == 'Statlog_Shuttle':
-      data_set = fetch_ucirepo(id=148)
+      data_set_train = pd.read_csv("datasets/shuttle.trn", delim_whitespace=True, header=None)
+      data_set_test = pd.read_csv("datasets/shuttle.tst", delim_whitespace=True, header=None)
 
-      X = data_set.data.features
-      y = data_set.data.targets
+      data_set_train.columns = ["na", "na1", "Rad Flow", "Fpv Close", "Fpv Open",
+                                "High","Bypass", "Bpv Close", "Bpv Open", "target"
+                                ]
+      X_train = data_set_train.drop(["na", "na1","target"], axis=1)
+      y_train = data_set_train['target']
+
+      data_set_test.columns = ["na", "na1", "Rad Flow", "Fpv Close", "Fpv Open",
+                              "High","Bypass", "Bpv Close", "Bpv Open", "target"
+                                ]
+      X_test = data_set_test.drop(["na", "na1","target"], axis=1)
+      y_test = data_set_test['target']
+
+      X = pd.concat([X_train, X_test], ignore_index=True)
+      y = pd.concat([y_train, y_test], ignore_index=True)
 
     if name == 'Covertype':
       data_set = fetch_ucirepo(id=31)
