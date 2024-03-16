@@ -70,7 +70,7 @@ class MulticlassClassificationOvR:
 
 class LogitBoost:
 
-    def __init__(self,  base_estimator=True, learning_rate=0.1, n_estimators=50,
+    def __init__(self,  base_estimator=None, learning_rate=0.1, n_estimators=50,
                  max_depth=3, random_state=0):
 
         self.learning_rate = learning_rate
@@ -79,9 +79,10 @@ class LogitBoost:
         self.random_state = random_state
 
         if base_estimator:
-            self.base_estimator = DecisionTreeRegressor(max_depth=self.max_depth, criterion='friedman_mse', random_state=self.random_state)
-        else:
             self.base_estimator = base_estimator
+        else:
+            self.base_estimator = DecisionTreeRegressor(max_depth=self.max_depth, criterion='friedman_mse', random_state=self.random_state)
+                    
 
     def _softmax(self, predictions):
         exp = np.exp(predictions)
@@ -126,11 +127,11 @@ class LogitBoost:
 ############################################        
 
 class MEBoost:
-    def __init__(self, base_estimator=True, n_estimators=50, learning_rate=1):
+    def __init__(self, base_estimator=None, n_estimators=50, learning_rate=1):
         if base_estimator:
-            self.base_estimator = DecisionTreeClassifier(max_depth=1, max_leaf_nodes=2)
-        else:
             self.base_estimator = base_estimator
+        else:
+            self.base_estimator = DecisionTreeClassifier(max_depth=1, max_leaf_nodes=2)
 
         self.n_estimators = n_estimators
 
@@ -276,13 +277,14 @@ def sign(x):
 
 class AdaBoost:
 
-    def __init__(self, base_estimator=True, n_estimators=50):
+    def __init__(self, base_estimator=None, n_estimators=50):
         self.n_estimators = n_estimators
 
         if base_estimator:
-            self.base_estimator = DecisionTreeClassifier(max_depth=1, max_leaf_nodes=2)
-        else:
+            print("Estimator is implemented")
             self.base_estimator = base_estimator
+        else:
+            self.base_estimator = DecisionTreeClassifier(max_depth=1, max_leaf_nodes=2)
 
         self.models = [None]*n_estimators
 
@@ -298,28 +300,41 @@ class AdaBoost:
 
         for m in range(self.n_estimators):
 
-            Gm = DecisionTreeClassifier(max_depth=1)\
-                        .fit(X,y,sample_weight=w).predict
+            # Gm = DecisionTreeClassifier(max_depth=1)\
+                        # .fit(X,y,sample_weight=w).predict
 
+            model = copy.copy(self.base_estimator)
+
+            model.fit(X, y, sample_weight=w)
+
+            y_pred = model.predict(X)
+
+            total_error = np.where(y_pred != y, w, 0).sum()
             # Gm = copy.copy(self.base_estimator).fit(X,y,sample_weight=w).predict
 
-            errM = sum([w[i]*I(y[i]!=Gm(X[i].reshape(1,-1))) \
-                        for i in range(N)])/sum(w)
+            # errM = sum([w[i]*I(y[i]!=Gm(X[i].reshape(1,-1))) \
+            #             for i in range(N)])/sum(w)
 
-            AlphaM = np.log((1-errM)/errM)
+            # AlphaM = np.log((1-errM)/errM)
 
-            w = [w[i]*np.exp(AlphaM*I(y[i]!=Gm(X[i].reshape(1,-1))))\
-                     for i in range(N)]
+            # 0.5 * 
+            alpha = 0.5 * np.log((1 - total_error)/(total_error + 1e-10))
+
+            # w = [w[i]*np.exp(AlphaM*I(y[i]!=Gm(X[i].reshape(1,-1))))\
+            #          for i in range(N)]
+
+            sampled_weight = np.where(y_pred != y, w * np.exp(alpha), w * np.exp(-1 * alpha))
 
 
-            self.models[m] = (AlphaM,Gm)
+            self.models[m] = (alpha, model)
 
     def predict(self,X):
 
         y = 0
         for m in range(self.n_estimators):
-            AlphaM,Gm = self.models[m]
-            y += AlphaM*Gm(X)
+            alpha, model = self.models[m]
+            y += alpha*model.predict(X)
+
         signA = np.vectorize(sign)
         y = np.where(signA(y)==-1,0,1)
   
@@ -337,7 +352,10 @@ def set_seed(seed):
 class RUSBoost:
 
     def __init__(self, base_estimator=None, n_estimators=500, learning_rate=1e-2, seed=42):
-        self.base_estimator = base_estimator if base_estimator else DecisionTreeClassifier(max_depth=1)  #SVC() #LogisticRegression()
+        if base_estimator:
+          self.base_estimator = base_estimator
+        else:
+          self.base_estimator = DecisionTreeClassifier(max_depth=1)  #SVC() #LogisticRegression()
         self.n_estimators = n_estimators
         self.learning_rate = learning_rate
         self.models = []  # List to store models
@@ -401,6 +419,7 @@ class RUSBoost:
 
 class GradientBoostingClassifier:
     def __init__(self, base_estimator=None, n_estimators=100, learning_rate=1.0, max_depth=3, min_samples_split=2, loss='deviance', seed=None):
+        self.base_estimator = base_estimator if base_estimator else DecisionTreeClassifier(max_depth=1)
         self.n_estimators = n_estimators
         self.learning_rate = learning_rate
         self.max_depth = max_depth
@@ -430,7 +449,8 @@ class GradientBoostingClassifier:
             residuals = self._loss_derivative(y, f_m)
 
             # Fit a base model to the residuals
-            model = DecisionTreeRegressor(max_depth=self.max_depth, min_samples_split=self.min_samples_split)
+            # model = DecisionTreeRegressor(max_depth=self.max_depth, min_samples_split=self.min_samples_split)
+            model = copy.copy(self.base_estimator)
             model.fit(X, residuals)
             self.models.append(model)
 
