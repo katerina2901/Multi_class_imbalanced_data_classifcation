@@ -28,12 +28,13 @@ def load_dataset(name):
                  'Vertebral_Column', 'Differentiated_Thyroid_Cancer_Recurrence',
                  'Dermatology', 'Balance_Scale', 'Glass_Identification',
                  'Heart_Disease', 'Car_Evaluation', 'Thyroid_Disease', 'Yeast',
-                 'Page_Blocks_Classification', 'Statlog_Shuttle', 'Covertype'
+                 'Page_Blocks_Classification', 'Statlog_Shuttle', 'Covertype',
                  ]
-
     if name not in list_of_names:
-      raise ValueError("Dataset no found")
+        raise ValueError("Dataset no found")
 
+
+    print(f"Loading {name}")
     if name == 'Wine':
       data_set = fetch_ucirepo(id=109)
 
@@ -170,6 +171,8 @@ def load_dataset(name):
       X = data_set.data.features
       y = data_set.data.targets
 
+
+
     return X, y
 
 def preprocessing(X, y, scaler=StandardScaler(), test_size=0.3, random_state=42):
@@ -186,4 +189,3 @@ def preprocessing(X, y, scaler=StandardScaler(), test_size=0.3, random_state=42)
     y_test = le.transform(y)
 
     return X_train, X_test, y_train, y_test
-
