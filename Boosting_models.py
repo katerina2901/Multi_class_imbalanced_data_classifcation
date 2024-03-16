@@ -45,6 +45,7 @@ class MulticlassClassificationOvR:
 
             # Fit model and append to models list
             model = copy.copy(self.bin_boosting_model)
+            # model = self.bin_boosting_model
             model.fit(x_true_false, y_true_false)
             self.models.append([y_i, model])
 
@@ -287,6 +288,8 @@ class AdaBoost:
 
     def fit(self,X,y):
 
+        self.models = [None]*self.n_estimators
+
         y = np.where(y==0,-1,1)
 
         X = np.float64(X)
@@ -319,6 +322,7 @@ class AdaBoost:
             y += AlphaM*Gm(X)
         signA = np.vectorize(sign)
         y = np.where(signA(y)==-1,0,1)
+  
         return y
 
 ##########################################################################
@@ -340,6 +344,7 @@ class RUSBoost:
         set_seed(seed)
 
     def fit(self, X, y):
+        self.models = []
         self.estimator_weights = np.zeros(self.n_estimators)  # Initialize estimator weights
         self.estimator_errors = np.zeros(self.n_estimators)  # Initialize estimator errors
         sample_weights = np.full(X.shape[0], 1 / X.shape[0])  # create an array with shape X.shape[0] and value 1 / X.shape[0]
@@ -412,6 +417,7 @@ class GradientBoostingClassifier:
 
     def fit(self, X, y):
         # Convert y to {0, 1}
+        self.models = []
         y = (y == 1).astype(int)
 
         # Initialize with a dummy model that predicts the log odds ratio
