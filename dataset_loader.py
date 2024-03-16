@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1GpP4wxPfIBx9d_Khkb9IQIwBTLM4iXH9
 """
 
-!pip install ucimlrepo
-
 # import libraries
 import numpy as np
 import pandas as pd
