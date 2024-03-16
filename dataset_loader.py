@@ -185,7 +185,7 @@ def preprocessing(X, y, scaler=StandardScaler(), test_size=0.3, random_state=42)
     X_test = scaler.transform(X_test)
     # labelling the target variable
     le = LabelEncoder()
-    y_train = le.fit_transform(y)
-    y_test = le.transform(y)
+    y_train = le.fit_transform(y_train)
+    y_test = le.transform(y_test)
 
     return X_train, X_test, y_train, y_test
