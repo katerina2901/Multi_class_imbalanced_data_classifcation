@@ -89,7 +89,14 @@ def load_dataset(name):
       data_set = fetch_ucirepo(id=33)
 
       X = data_set.data.features
+      # X[X.isnull().any(1)].index
+      # Drop nan rows
+      X = X.dropna()
+      X = X.reset_index()
+
       y = data_set.data.targets
+      y = y.drop([33, 34, 35, 36, 262, 263, 264, 265])
+      y = y.reset_index()
 
     if name == 'Balance_Scale':
       data_set = fetch_ucirepo(id=12)
@@ -110,11 +117,13 @@ def load_dataset(name):
       X = data_set.data.features
       X[X.isnull().any(1)].index
       X = X.dropna()
+      X = X.reset_index()
       X_cat = ['cp', 'fbs', 'restecg', 'exang', 'slope', 'thal']
       X = pd.get_dummies(X, columns = X_cat, drop_first = True)
 
       y = data_set.data.targets
       y = y.drop([87, 166, 192, 266, 287, 302])
+      y = y.reset_index()
 
     if name == 'Car_Evaluation':
       data_set = fetch_ucirepo(id=19)
@@ -177,15 +186,13 @@ def load_dataset(name):
 
 def preprocessing(X, y, scaler=StandardScaler(), test_size=0.3, random_state=42):
 
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size,
                                        random_state=random_state, stratify=y)
 
-
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-    # labelling the target variable
-    le = LabelEncoder()
-    y_train = le.fit_transform(y_train)
-    y_test = le.transform(y_test)
 
     return X_train, X_test, y_train, y_test
