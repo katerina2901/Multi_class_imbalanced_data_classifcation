@@ -472,7 +472,7 @@ class GradientBoostingClassifier:
       min_samples_split=2, loss='deviance',
        seed=None, sampler = None):
 
-        self.base_estimator = base_estimator if base_estimator else DecisionTreeClassifier(max_depth=1)
+        self.base_estimator = base_estimator if base_estimator else DecisionTreeRegressor(max_depth=1, max_leaf_nodes=2, random_state=42)
         self.n_estimators = n_estimators
         self.learning_rate = learning_rate
         self.max_depth = max_depth
