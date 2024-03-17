@@ -34,7 +34,7 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True):
     }
 
   # Setup for M-fold cross-validation
-  skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
+  skf = StratifiedKFold(n_splits=3, random_state=42, shuffle=True)
   #for train_index, test_index in skf.split(X, y):
     #X_train_fold, X_test_fold = X.iloc[train_index], X.iloc[test_index]
     #y_train_fold, y_test_fold = y[train_index], y[test_index]  # Direct indexing for y if it's a numpy array
@@ -78,9 +78,9 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True):
 
     metrics["Balanced Accuracy"].append(balanced_accuracy_score(y_test_fold, y_pred_fold))
 
-  for metric, values in metrics.items():
+  # for metric, values in metrics.items():
     #print(f"{metric}: {np.round(np.mean(values), 3)} ± {np.round(np.std(values), 3)}")
-    if return_str:
-       return {metric: f"{np.round(np.mean(values), 3)} ± {np.round(np.std(values), 3)}" for metric, values in metrics.items()}
-    else:
-       return {metric: np.mean(values) for metric, values in metrics.items()}
+  if return_str:
+     return {metric: f"{np.round(np.mean(values), 3)} ± {np.round(np.std(values), 3)}" for metric, values in metrics.items()}
+  else:
+     return {metric: np.mean(values) for metric, values in metrics.items()}
