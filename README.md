@@ -27,7 +27,7 @@ ML_Project
 │   ├── 1st_experiment_base_learners.txt
 │   ├── 2st_experiment_preprocessing.txt
 │   └── 3st_experiment_resampling.txt
-├── expirements # 
+├── expirements 
 │   ├── paper_experiment. # repeat experiments from main paper with boosting methods
 │   ├── 1st_experiment_base_learners.ipynb # experiments with another base estimators
 │   ├── 2st_experiment_preprocessing.ipynb # experiments with preprocessing operators
