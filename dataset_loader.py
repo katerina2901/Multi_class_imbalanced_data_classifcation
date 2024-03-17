@@ -10,8 +10,6 @@ Original file is located at
 # import libraries
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -180,15 +178,13 @@ def load_dataset(name):
 
     return X, y
 
-def preprocessing(X, y, scaler=StandardScaler(), test_size=0.3, random_state=42):
+def preprocessing(X_train, X_test, y_train, y_test):
+  le = LabelEncoder()
+  y_train = le.fit_transform(y_train)
+  y_test = le.transform(y_test)
 
-    le = LabelEncoder()
-    y = le.fit_transform(y)
+  scaler = StandardScaler()
+  X_train = scaler.fit_transform(X_train)
+  X_test = scaler.transform(X_test)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size,
-                                       random_state=random_state, stratify=y)
-
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
-
-    return X_train, X_test, y_train, y_test
+  return X_train, X_test, y_train, y_test
