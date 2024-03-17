@@ -7,7 +7,7 @@ To run this code and reproduce results you need install these packages and libra
 Explore methods for improving the performance of boosting algorithms in multi-label classification tasks, especially handling unbalanced datasets. 
 
 ## Presentations
-Project presentation - official report on this project by our team.
+[Project presentation](https://docs.google.com/presentation/d/1oxwzHTHZcKOx6UTRPLHiuyml_b9V-wnnT7GAfO96uL8/edit#slide=id.p3) - official report on this project by our team.
 
 ## Repository structure
 ```
