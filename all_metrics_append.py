@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1MR5P26dJJDrA-1MO5a-nnqgk2uQQGJ1G
 """
 
+from os import ST_APPEND
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import (matthews_corrcoef, roc_auc_score, precision_score,
                              recall_score, f1_score, cohen_kappa_score, accuracy_score)
@@ -19,7 +20,7 @@ from sklearn.metrics import balanced_accuracy_score
 from sklearn.metrics import average_precision_score
 
 
-def metrics_append (X, y, clf, preprocessing_local, return_str=True):
+def metrics_append (X, y, clf, preprocessing_local, return_str=True, sampling = None):
   metrics = {
     "Precision": [],
     "Recall": [],
@@ -46,6 +47,13 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True):
     y_test_fold = np.array(y)[test_index]
 
     X_train_fold, X_test_fold, y_train_fold, y_test_fold = preprocessing_local(X_train_fold, X_test_fold, y_train_fold, y_test_fold)
+    if sampling:
+        try:
+            X_train_fold, y_train_fold = sampling.fit_resample(X_train_fold, y_train_fold)
+        except:
+            sampled = sampling(X_train_fold, y_train_fold)
+            X_train_fold = np.array([s[1] for s in sampled])
+            y_train_fold = np.array([s[2] for s in sampled])
 
     # Initialize and fit your classifier
     # clf = AdaBoostClassifier(n_estimators=30, algorithm="SAMME", random_state=0)

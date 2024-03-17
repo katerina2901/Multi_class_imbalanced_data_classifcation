@@ -416,7 +416,7 @@ class RUSBoost:
         self.estimator_errors = np.zeros(self.n_estimators)  # Initialize estimator errors
         sample_weights = np.full(X.shape[0], 1 / X.shape[0])  # create an array with shape X.shape[0] and value 1 / X.shape[0]
 
-        for i in tqdm(range(self.n_estimators)):
+        for i in range(self.n_estimators):
             # Undersampling
             X_resampled, y_resampled = self.undersampling(X, y, sample_weights)
 
@@ -515,7 +515,7 @@ class GradientBoostingClassifier:
         f_m = np.full(shape=y.shape, fill_value=initial_pred)
         self.initial_model = initial_pred
 
-        for i in tqdm(range(self.n_estimators)):
+        for i in range(self.n_estimators):
             # Compute pseudo-residuals as negative gradient of the loss function
             residuals = self._loss_derivative(y, f_m)
 
