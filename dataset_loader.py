@@ -31,7 +31,7 @@ def load_dataset(name):
     if name not in list_of_names:
         raise ValueError("Dataset no found")
 
-    print(f"Loading {name}")
+    # print(f"Loading {name}")
 
     if name == 'Wine':
       data_set = fetch_ucirepo(id=109)
