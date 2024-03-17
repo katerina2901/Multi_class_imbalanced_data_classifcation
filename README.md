@@ -28,7 +28,7 @@ ML_Project
 │   ├── 2st_experiment_preprocessing.txt
 │   └── 3st_experiment_resampling.txt
 ├── expirements 
-│   ├── paper_experiment. # repeat experiments from main paper with boosting methods
+│   ├── paper_experiment.ipynb # repeat experiments from main paper with boosting methods
 │   ├── 1st_experiment_base_learners.ipynb # experiments with another base estimators
 │   ├── 2st_experiment_preprocessing.ipynb # experiments with preprocessing operators
 │   └── 3st_experiment_resampling.ipynb # experiments with using data-level approach resampling methods
@@ -44,6 +44,7 @@ All dataset from [UC Irvine Machine Learning Repository](https://archive.ics.uci
 
 ## Requirements
 ```!pip install ucimlrepo```
+
 ```!pip install catboost```
 
 
