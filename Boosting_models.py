@@ -71,7 +71,7 @@ class MulticlassClassificationOvR:
 class LogitBoost:
 
     def __init__(self,  base_estimator=None, learning_rate=0.1, n_estimators=50,
-                 max_depth=3, random_state=0):
+                 max_depth=3, random_state=0, sampler = None, sampler_type="Global"):
 
         self.learning_rate = learning_rate
         self.n_estimators = n_estimators
@@ -82,23 +82,41 @@ class LogitBoost:
             self.base_estimator = base_estimator
         else:
             self.base_estimator = DecisionTreeRegressor(max_depth=self.max_depth, criterion='friedman_mse', random_state=self.random_state)
-                    
+
+        if sampler:
+          # print("Sampling is used")
+          self.sampler_flag = True
+          self.sampling = sampler
+          self.sampler_type = sampler_type
+
+        else:
+          self.sampler_flag = False
+          self.samler_type = "None"        
 
     def _softmax(self, predictions):
         exp = np.exp(predictions)
 
         return exp / np.sum(exp, axis=1, keepdims=True)
 
-    def fit(self, X, y):
+    def fit(self, X, Y):
 
-        predictions = np.zeros((y.shape[0], 2))
+        if self.sampler_flag == True and self.sampler_type == "Global":
+          # print("Oversampling")
+          try:
+            X, Y = self.sampling.fit_resample(X, Y)
+          except:
+            sampled = self.sampling(X, Y)
+            X = np.array([s[1] for s in sampled])
+            Y = np.array([s[2] for s in sampled])
+
+        predictions = np.zeros((Y.shape[0], 2))
 
         self.trees1 = []
 
         for _ in range(self.n_estimators):
             probabilities = self._softmax(predictions)
 
-            numerator = (y.T - probabilities.T[0])
+            numerator = (Y.T - probabilities.T[0])
             denominator = probabilities.T[0] * (1 - probabilities.T[0])
             residuals = 1 / 2 * numerator / denominator
             weights = denominator
@@ -127,11 +145,23 @@ class LogitBoost:
 ############################################        
 
 class MEBoost:
-    def __init__(self, base_estimator=None, n_estimators=50, learning_rate=1):
+    def __init__(self, base_estimator=None, n_estimators=50,
+     learning_rate=1, sampler = None, sampler_type="Global"):
+
         if base_estimator:
             self.base_estimator = base_estimator
         else:
             self.base_estimator = DecisionTreeClassifier(max_depth=1, max_leaf_nodes=2)
+
+        if sampler:
+          # print("Sampling is used")
+          self.sampler_flag = True
+          self.sampling = sampler
+          self.sampler_type = sampler_type
+
+        else:
+          self.sampler_flag = False
+          self.samler_type = "None"
 
         self.n_estimators = n_estimators
 
@@ -139,6 +169,15 @@ class MEBoost:
         self.estimator_weights = None
 
     def fit(self, X, Y):
+
+        if self.sampler_flag == True and self.sampler_type == "Global":
+          # print("Oversampling")
+          try:
+            X, Y = self.sampling.fit_resample(X, Y)
+          except:
+            sampled = self.sampling(X, Y)
+            X = np.array([s[1] for s in sampled])
+            Y = np.array([s[2] for s in sampled])
 
         X, X_test_loc, Y, Y_test_loc = train_test_split(X, Y, test_size=0.3,
                                                     random_state=42, stratify=Y)
@@ -164,16 +203,20 @@ class MEBoost:
             m += 1
 
             while True:
-              # sampled = self.undersampling(X, Y)
-              # sampled_weight = [sample_weights[s[0]] for s in sampled]
-              # sampled_X      = [s[1] for s in sampled]
-              # sampled_Y       = [s[2] for s in sampled]
-              # sampled_indeces = [s[0] for s in sampled]
 
-              sampled_X = X
-              sampled_Y = Y
-              sampled_indeces = range(0, X.shape[0])
-              sampled_weight = sample_weights
+              if self.sampler_flag == True and self.sampler_type == "Boost_step":
+                # print("Undersampling")
+                sampled = self.sampling(X, Y)
+                sampled_weight = [sample_weights[s[0]] for s in sampled]
+                sampled_X      = [s[1] for s in sampled]
+                sampled_Y       = [s[2] for s in sampled]
+                sampled_indeces = [s[0] for s in sampled]
+
+              else:
+                sampled_X = X
+                sampled_Y = Y
+                sampled_indeces = range(0, X.shape[0])
+                sampled_weight = sample_weights
 
               sampled_weight = np.array(sampled_weight)
               sampled_X = np.array(sampled_X)
@@ -226,36 +269,6 @@ class MEBoost:
 
                   break
 
-    def undersampling(self, X, Y):
-
-        '''Check the major class'''
-        diff = Y.sum() > Y.shape[0] - Y.sum()
-        delete_list = []
-        keep_list =[]
-        if  diff:
-            for i in range(len(Y)):
-                if Y[i] == 1:
-                    delete_data = [i, X[i], 1]
-                    delete_list.append(delete_data)
-                else:
-                    keep_data = [i, X[i], 0]
-                    keep_list.append(keep_data)
-        else:
-            for i in range(len(Y)):
-                if Y[i] == 0:
-                    delete_data = [i, X[i], 0]
-                    delete_list.append(delete_data)
-                else:
-                    keep_data = [i, X[i], 1]
-                    keep_list.append(keep_data)
-
-        while len(delete_list) > 0.5*(len(delete_list)+len(keep_list)):
-            k = random.choice(range(len(delete_list)))
-            delete_list.pop(k)
-
-        all_list = delete_list + keep_list
-        return sorted(all_list, key=lambda x:x[2])
-
     def predict(self, X, verbose=False):
         """
         * every estimator makes his predictions in the shape (len(X)) -> [a, b, ..., len(X)]
@@ -277,39 +290,73 @@ def sign(x):
 
 class AdaBoost:
 
-    def __init__(self, base_estimator=None, n_estimators=50):
+    def __init__(self, base_estimator=None, n_estimators=50, sampler = None, sampler_type="Global"):
         self.n_estimators = n_estimators
 
         if base_estimator:
-            print("Estimator is implemented")
+            # print("Estimator is implemented")
             self.base_estimator = base_estimator
         else:
             self.base_estimator = DecisionTreeClassifier(max_depth=1, max_leaf_nodes=2)
 
+        if sampler:
+          # print("Sampling is used")
+          self.sampler_flag = True
+          self.sampling = sampler
+          self.sampler_type = sampler_type
+
+        else:
+          self.sampler_flag = False
+          self.samler_type = "None"
+
         self.models = [None]*n_estimators
 
-    def fit(self,X,y):
+    def fit(self,X,Y):
+
+        if self.sampler_flag == True and self.sampler_type == "Global":
+          # print("Oversampling")
+          try:
+            X, Y = self.sampling.fit_resample(X, Y)
+          except:
+            sampled = self.sampling(X, Y)
+            X = np.array([s[1] for s in sampled])
+            Y = np.array([s[2] for s in sampled])
 
         self.models = [None]*self.n_estimators
 
-        y = np.where(y==0,-1,1)
+        Y = np.where(Y==0,-1,1)
 
         X = np.float64(X)
-        N = len(y)
-        w = np.array([1/N for i in range(N)])
+        # N = len(Y)
+        # w = np.array([1/N for i in range(N)])
+        sample_weights = np.full(len(X), 1/len(X))
 
         for m in range(self.n_estimators):
+            if self.sampler_flag == True and self.sampler_type == "Boost_step":
+              # print("Undersampling")
+              sampled = self.sampling(X, Y)
+              sampled_weight = [sample_weights[s[0]] for s in sampled]
+              sampled_X      = [s[1] for s in sampled]
+              sampled_Y       = [s[2] for s in sampled]
+              sampled_indeces = [s[0] for s in sampled]
 
-            # Gm = DecisionTreeClassifier(max_depth=1)\
-                        # .fit(X,y,sample_weight=w).predict
+            else:
+              sampled_X = X
+              sampled_Y = Y
+              sampled_indeces = range(0, X.shape[0])
+              sampled_weight = sample_weights
+
+            sampled_weight = np.array(sampled_weight)
+            sampled_X = np.array(sampled_X)
+            sampled_Y = np.array(sampled_Y)
 
             model = copy.copy(self.base_estimator)
 
-            model.fit(X, y, sample_weight=w)
+            model.fit(X, Y, sample_weight=sampled_weight)
 
             y_pred = model.predict(X)
 
-            total_error = np.where(y_pred != y, w, 0).sum()
+            total_error = np.where(y_pred != Y, sampled_weight, 0).sum()
             # Gm = copy.copy(self.base_estimator).fit(X,y,sample_weight=w).predict
 
             # errM = sum([w[i]*I(y[i]!=Gm(X[i].reshape(1,-1))) \
@@ -323,8 +370,10 @@ class AdaBoost:
             # w = [w[i]*np.exp(AlphaM*I(y[i]!=Gm(X[i].reshape(1,-1))))\
             #          for i in range(N)]
 
-            sampled_weight = np.where(y_pred != y, w * np.exp(alpha), w * np.exp(-1 * alpha))
+            sampled_weight = np.where(y_pred != Y, sampled_weight * np.exp(alpha), sampled_weight * np.exp(-1 * alpha))
 
+            sampled_weight = sampled_weight / sampled_weight.sum()
+            sample_weights[sampled_indeces] = sampled_weight
 
             self.models[m] = (alpha, model)
 
@@ -418,7 +467,11 @@ class RUSBoost:
 ##########################################################################
 
 class GradientBoostingClassifier:
-    def __init__(self, base_estimator=None, n_estimators=100, learning_rate=1.0, max_depth=3, min_samples_split=2, loss='deviance', seed=None):
+    def __init__(self, base_estimator=None, n_estimators=100,
+     learning_rate=1.0, max_depth=3,
+      min_samples_split=2, loss='deviance',
+       seed=None, sampler = None):
+
         self.base_estimator = base_estimator if base_estimator else DecisionTreeClassifier(max_depth=1)
         self.n_estimators = n_estimators
         self.learning_rate = learning_rate
@@ -429,6 +482,15 @@ class GradientBoostingClassifier:
         self.models = []
         if seed is not None:
             np.random.seed(seed)
+
+        if sampler:
+          # print("Sampling is used")
+          self.sampler_flag = True
+          self.sampling = sampler
+
+        else:
+          self.sampler_flag = False
+        
     def _loss_derivative(self, y, pred):
         """Compute the derivative of the loss function."""
         # Using logistic loss derivative for binary classification
@@ -436,6 +498,15 @@ class GradientBoostingClassifier:
 
     def fit(self, X, y):
         # Convert y to {0, 1}
+        if self.sampler_flag == True:
+          # print("Oversampling")
+          try:
+            X, y = self.sampling.fit_resample(X, y)
+          except:
+            sampled = self.sampling(X, y)
+            X = np.array([s[1] for s in sampled])
+            y = np.array([s[2] for s in sampled])
+
         self.models = []
         y = (y == 1).astype(int)
 
