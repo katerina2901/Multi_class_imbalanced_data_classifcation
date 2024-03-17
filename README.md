@@ -1,4 +1,4 @@
-# ML_project_Boosters
+# Boosting approaches with multi-label imbalanced data problem
 
 This repository contains code for Final Project of ML Course in Skoltech.
 To run this code and reproduce results you need install these packages and libraries, you should use Python 3.10.
