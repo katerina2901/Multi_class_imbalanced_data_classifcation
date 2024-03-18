@@ -120,7 +120,15 @@ preprocessors = [
     ('kbins', KBinsDiscretizer_)
 ]
 boosters_list = ["LogitBoost", "MEBoost", "AdaBoost", "RUSBoost", "GradientBoostingClassifier"]
-metrics_all = {
+
+best_combinations = {}
+for dataset_name in dataset_names:
+    print(f"Processing dataset: {dataset_name}")
+    X, y = load_dataset(dataset_name)
+    best_score = float('-inf')  # Start with the worst possible score
+    best_combination = {'algorithm': None, 'preprocessor': None, 'score': None}
+    metrics_all = {
+    "Preprocessor":[],
     "Boosters":[],
     "Precision": [],
     "Recall": [],
@@ -132,12 +140,6 @@ metrics_all = {
     "PR Score": [],
     "Balanced Accuracy": [],
     }
-best_combinations = {}
-for dataset_name in dataset_names:
-    print(f"Processing dataset: {dataset_name}")
-    X, y = load_dataset(dataset_name)
-    best_score = float('-inf')  # Start with the worst possible score
-    best_combination = {'algorithm': None, 'preprocessor': None, 'score': None}
 
     for preprocessor_name, preprocessor in preprocessors:
         print(f"Applying preprocessor: {preprocessor_name}")
@@ -153,7 +155,8 @@ for dataset_name in dataset_names:
                 best_combination['algorithm'] = model.__name__
                 best_combination['preprocessor'] = preprocessor_name
                 best_combination['score'] = current_score
-
+            
+            metrics_all["Preprocessor"].append(preprocessor_name)
             metrics_all["Boosters"].append(model.__name__)
             for metric, values in metrics.items():
                 metrics_all[metric].append(values)
