@@ -36,9 +36,6 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True, sampling = 
 
   # Setup for M-fold cross-validation
   skf = StratifiedKFold(n_splits=3, random_state=42, shuffle=True)
-  #for train_index, test_index in skf.split(X, y):
-    #X_train_fold, X_test_fold = X.iloc[train_index], X.iloc[test_index]
-    #y_train_fold, y_test_fold = y[train_index], y[test_index]  # Direct indexing for y if it's a numpy array
 
   for train_index, test_index in skf.split(X, y):
     X_train_fold = np.array(X)[train_index]
@@ -54,11 +51,7 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True, sampling = 
             sampled = sampling(X_train_fold, y_train_fold)
             X_train_fold = np.array([s[1] for s in sampled])
             y_train_fold = np.array([s[2] for s in sampled])
-
-    # Initialize and fit your classifier
-    # clf = AdaBoostClassifier(n_estimators=30, algorithm="SAMME", random_state=0)
-    ##Yoour classifier##
-    #clf=MulticlassClassificationOvR(GradientBoostingClassifier())
+            
     clf.fit(X_train_fold, y_train_fold)
 
     # Predictions and scores
