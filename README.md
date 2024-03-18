@@ -23,7 +23,9 @@ ML_Project
 │   ├── presentation.pdf
 │   └── report.pdf
 ├── results # results of expirements
-│   ├── paper_experiment.txt
+│   ├── baseline_experiment
+│   │     ├──all_algorithms.csv
+│   │     ├──best_algorithms.csv
 │   ├── 1st_experiment_base_learners.txt
 │   ├── 2st_experiment_preprocessing.txt
 │   └── 3st_experiment_resampling.txt
