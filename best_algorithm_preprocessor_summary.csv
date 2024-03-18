@@ -1,0 +1,14 @@
+,Best Algorithm,Best Preprocessor,Best F1 Score
+Balance_Scale,AdaBoost,normalizer,0.8779147130836625
+Car_Evaluation,AdaBoost,polynomial,0.9008874835946576
+Contraceptive_Method_Choice,RUSBoost,normalizer,0.4904872779069056
+Dermatology,AdaBoost,kbins,0.9858419649693494
+Differentiated_Thyroid_Cancer_Recurrence,AdaBoost,normalizer,0.9947452636968768
+Glass_Identification,AdaBoost,polynomial,0.8644237475745213
+Hayes_Roth,GradientBoostingClassifier,polynomial,0.8921543893104965
+Pen-Based_Recognition_of_Handwritten_Digits,AdaBoost,polynomial,0.9680455383414008
+Statlog_Shuttle,AdaBoost,standard,0.9934777856302696
+Thyroid_Disease,GradientBoostingClassifier,normalizer,0.9906090413112444
+Vertebral_Column,LogitBoost,polynomial,0.9270513930692768
+Wine,GradientBoostingClassifier,normalizer,0.9944530934671048
+Yeast,GradientBoostingClassifier,polynomial,0.6110735952143284
