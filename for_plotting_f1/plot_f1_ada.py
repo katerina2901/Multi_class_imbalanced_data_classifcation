@@ -15,16 +15,16 @@ def plot_f1_score(file_path):
   df_base = pd.read_csv('adaboost_baseline.csv')
   df = pd.read_csv(file_path)
 
-  plt.errorbar(x=range(len(df_base)), y=df_base['F1'], yerr=df_base['std'], fmt='o', color='grey', capsize=5)
+  plt.errorbar(x=range(len(df_base)), y=df_base['F1'], yerr=df_base['std'], fmt='o', color='grey', capsize=5, label='Baseline')
   #for your csv file
   #adjust color
-  plt.errorbar(x=range(len(df_base)), y=df['F1'], yerr=df['std'], fmt='o', color='grey', capsize=5)
+  plt.errorbar(x=range(len(df_base)), y=df['F1'], yerr=df['std'], fmt='o', color='grey', capsize=5, label='Base enstimators')
   plt.xticks(range(len(df_base)), df_base['Dataset'], rotation=45, ha='right')
 
   plt.title('F1 Scores by Dataset with Standard Deviation for AdaBoost')
   plt.ylabel('F1 Score')
   plt.xlabel('Datasets')
-
+  plt.legend(fontsize='12')
   plt.gca().invert_xaxis()
   plt.tight_layout()
   plt.show()
