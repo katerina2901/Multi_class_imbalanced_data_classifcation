@@ -21,7 +21,7 @@ def plot_f1_score(file_path):
   plt.errorbar(x=range(len(df_base)), y=df['F1'], yerr=df['std'], fmt='o', color='grey', capsize=5)
   plt.xticks(range(len(df_base)), df_base['Dataset'], rotation=45, ha='right')
 
-  plt.title('F1 Scores by Dataset with Standard Deviation for LogidBoost')
+  plt.title('F1 Scores by Dataset with Standard Deviation for AdaBoost')
   plt.ylabel('F1 Score')
   plt.xlabel('Datasets')
 
