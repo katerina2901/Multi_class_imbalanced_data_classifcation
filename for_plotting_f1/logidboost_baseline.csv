@@ -1,0 +1,16 @@
+Dataset,F1,std
+Pen-Based_Recognition,0.916,0.025
+Hayes_Roth,0.891,0.024
+Wine,0.956,0.038
+Contraceptive,0.264,0.009
+Balance_Scale,0.662,0.059
+Differentiated_Thyroid,0.979,0.015
+Vertebral_Column,0.852,0.048
+Dermatology,0.966,0.036
+Thyroid_Disease,0.947,0.018
+Glass_Identification,0.744,0.104
+Heart_Disease,0.561,0.11
+Car_Evaluation,0.836,0.006
+Yeast,0.483,0.089
+Covertype,0.525,0.019
+Statlog_Shuttle,0.993,0.001
