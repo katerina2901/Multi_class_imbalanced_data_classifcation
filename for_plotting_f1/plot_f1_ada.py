@@ -28,7 +28,7 @@ def plot_f1_score(file_path):
 
     plt.xticks(range(len(df_base)), df_base['Dataset'], rotation=45, ha='right')
 
-    plt.title('F1 Scores by Dataset with Standard Deviation for LogitBoost')
+    plt.title('F1 Scores by Dataset with Standard Deviation for ADABoost')
     plt.ylabel('F1 Score')
     plt.xlabel('Datasets')
     plt.legend(fontsize='12')
