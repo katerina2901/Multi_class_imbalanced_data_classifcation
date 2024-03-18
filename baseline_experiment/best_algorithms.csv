@@ -1,0 +1,17 @@
+,,,
+Dataset,MeanIR,Top-Performing Algorithm,F1
+Pen-Based_Recognition_of_Handwritten_Digits,0.961,XGBoost,0.989 ± 0.001
+Hayes_Roth,0.856,LogitBoost,0.891 ± 0.024
+Wine,0.836,AdaBoost,0.983 ± 0.024
+Contraceptive_Method_Choice,0.781,RUSBoost,0.461 ± 0.061
+Balance_Scale,0.723,AdaBoost,0.857 ± 0.025
+Differentiated_Thyroid_Cancer_Recurrence,0.696,LogitBoost,0.979 ± 0.015
+Vertebral_Column,0.689,AdaBoost,0.862 ± 0.016
+Dermatology,0.538,AdaBoost,0.98 ± 0.017
+Thyroid_Disease,0.478,CatBoost,0.962 ± 0.014
+Glass_Identification,0.469,LogitBoost,0.744 ± 0.104
+Heart_Disease,0.371,LogitBoost,0.561 ± 0.11
+Car_Evaluation,0.357,XGBoost,0.974 ± 0.008
+Yeast,0.321,AdaBoost,0.582 ± 0.039
+Covertype,0.293,XGBoost,0.87 ± 0.0
+Statlog_Shuttle,0.182,XGBoost,0.998 ± 0.0
