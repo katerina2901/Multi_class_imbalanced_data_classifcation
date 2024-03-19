@@ -21,8 +21,7 @@ ML_Project
 │   ├── 2st_experiment_preprocessors.py # experiments with different preprocessing operators
 │   └── 3st_experiment_resampling.py # experiments with using data-level approach resampling methods
 ├── Metrics 
-│   ├── Metrics.py # repeat experiments from main paper with boosting methods
-│   ├── all_metrics_append.py # function for evaluating metrics
+│   ├── Metrics.py # function for evaluating metrics
 │   └── all_metrics_tables.py # function for pritning metrics in tables
 ├── Datasets # Dataset from UCI Machine Learning Repository that can't be imported in python
 │   ├── hayes_roth.data
