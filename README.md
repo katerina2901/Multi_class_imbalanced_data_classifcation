@@ -15,8 +15,13 @@ ML_Project
 ├── Boosting models # Contain scripts with boosting model mplementation
 │   ├── Boosting_models.py # Implemented boosting models
 │   └── smote.py # ready implementation of smote from https://github.com/dialnd/imbalanced-algorithms/blob/master/smote.py
-├── expirements 
+├── Experiments 
 │   ├── baseline.ipynb # repeat experiments from main paper with boosting methods
+│   ├── 1st_experiment_base_learners.py # experiments with different base estimators
+│   ├── 2st_experiment_preprocessors.py # experiments with different preprocessing operators
+│   └── 3st_experiment_resampling.ipynb # experiments with using data-level approach resampling methods
+├── Metrics 
+│   ├── paper_experiment.ipynb # repeat experiments from main paper with boosting methods
 │   ├── 1st_experiment_base_learners.ipynb # experiments with another base estimators
 │   ├── 2st_experiment_preprocessing.ipynb # experiments with preprocessing operators
 │   └── 3st_experiment_resampling.ipynb # experiments with using data-level approach resampling methods
@@ -37,7 +42,7 @@ ML_Project
 │   ├── 1st_experiment_base_learners.txt
 │   ├── 2st_experiment_preprocessing.txt
 │   └── 3st_experiment_resampling.txt
-├── expirements 
+├── Metrics 
 │   ├── paper_experiment.ipynb # repeat experiments from main paper with boosting methods
 │   ├── 1st_experiment_base_learners.ipynb # experiments with another base estimators
 │   ├── 2st_experiment_preprocessing.ipynb # experiments with preprocessing operators
