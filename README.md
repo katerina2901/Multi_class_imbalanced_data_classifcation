@@ -16,15 +16,14 @@ ML_Project
 │   ├── Boosting_models.py # Implemented boosting models
 │   └── smote.py # ready implementation of smote from https://github.com/dialnd/imbalanced-algorithms/blob/master/smote.py
 ├── Experiments 
-│   ├── baseline.ipynb # repeat experiments from main paper with boosting methods
+│   ├── baseline.py # repeat experiments from main paper with boosting methods
 │   ├── 1st_experiment_base_learners.py # experiments with different base estimators
 │   ├── 2st_experiment_preprocessors.py # experiments with different preprocessing operators
-│   └── 3st_experiment_resampling.ipynb # experiments with using data-level approach resampling methods
+│   └── 3st_experiment_resampling.py # experiments with using data-level approach resampling methods
 ├── Metrics 
-│   ├── paper_experiment.ipynb # repeat experiments from main paper with boosting methods
-│   ├── 1st_experiment_base_learners.ipynb # experiments with another base estimators
-│   ├── 2st_experiment_preprocessing.ipynb # experiments with preprocessing operators
-│   └── 3st_experiment_resampling.ipynb # experiments with using data-level approach resampling methods
+│   ├── Metrics.py # repeat experiments from main paper with boosting methods
+│   ├── all_metrics_append.py # function for evaluating metrics
+│   └── all_metrics_tables.py # function for pritning metrics in tables
 ├── Datasets # Dataset from UCI Machine Learning Repository that can't be imported in python
 │   ├── hayes_roth.data
 │   ├── new-thyroid.data
