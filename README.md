@@ -38,7 +38,7 @@ ML_Project
 │   │     ├──all_algorithms.csv
 │   │     ├──best_algorithms.csv
 │   ├── 1st_experiment_base_learners.txt
-│   ├── 2st_experiment_preprocessing.txt
+│   ├── 2nd_experiment_preprocessing.xlsx
 │   └── 3st_experiment_resampling.txt
 ├── Metrics 
 │   ├── paper_experiment.ipynb # repeat experiments from main paper with boosting methods
