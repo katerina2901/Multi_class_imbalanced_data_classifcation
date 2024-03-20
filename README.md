@@ -34,22 +34,11 @@ ML_Project
 │   ├── presentation.pdf
 │   └── report.pdf
 ├── results # results of expirements
-│   ├── baseline_experiment
-│   │     ├──all_algorithms.csv
-│   │     ├──best_algorithms.csv
-│   ├── 1st_experiment_base_learners.txt
-│   ├── 2nd_experiment_preprocessing.xlsx
+│   ├── baseline_experiment.csv
+│   ├── 1st_experiment_base_estimators.csv
+│   ├── 2nd_experiment_preprocessing.csv
 │   └── 3st_experiment_resampling.txt
-├── Metrics 
-│   ├── paper_experiment.ipynb # repeat experiments from main paper with boosting methods
-│   ├── 1st_experiment_base_estimators.ipynb # experiments with another base estimators
-│   ├── 2st_experiment_preprocessing.ipynb # experiments with preprocessing operators
-│   └── 3st_experiment_resampling.ipynb # experiments with using data-level approach resampling methods
-├── Boosting_models.py # implementation of boosting methods
-├── all_metrics_append.py # function for evaluating metrics
-├── all_metrics_tables.py # function for pritning metrics in tables
 ├── dataset_loader.py # function for loading dataset from UCI Machine Learning Repository
-├── smote.py # ready implementation of smote from https://github.com/dialnd/imbalanced-algorithms/blob/master/smote.py
 └── README.md
 ```
 ## Datasets 
