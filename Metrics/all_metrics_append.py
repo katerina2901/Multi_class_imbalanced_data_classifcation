@@ -28,16 +28,12 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True):
     "MMCC": [],
     "Kappa": [],
     "Weighted Accuracy": [],
-    #"ROC AUC": [],
     "PR Score": [],
     "Balanced Accuracy": [],
     }
 
   # Setup for M-fold cross-validation
   skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
-  #for train_index, test_index in skf.split(X, y):
-    #X_train_fold, X_test_fold = X.iloc[train_index], X.iloc[test_index]
-    #y_train_fold, y_test_fold = y[train_index], y[test_index]  # Direct indexing for y if it's a numpy array
 
   for train_index, test_index in skf.split(X, y):
     X_train_fold = np.array(X)[train_index]
@@ -48,14 +44,10 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True):
     X_train_fold, X_test_fold, y_train_fold, y_test_fold = preprocessing_local(X_train_fold, X_test_fold, y_train_fold, y_test_fold)
 
     # Initialize and fit your classifier
-    # clf = AdaBoostClassifier(n_estimators=30, algorithm="SAMME", random_state=0)
-    ##Yoour classifier##
-    #clf=MulticlassClassificationOvR(GradientBoostingClassifier())
     clf.fit(X_train_fold, y_train_fold)
 
     # Predictions and scores
     y_pred_fold = clf.predict(X_test_fold)
-    #y_pred_proba_fold = clf.predict_proba(X_test_fold)[:, 1]  # Assuming binary classification
 
     # Calculate metrics for this fold
     metrics["Precision"].append(precision_score(y_test_fold, y_pred_fold, average='weighted', zero_division=1))
@@ -72,15 +64,13 @@ def metrics_append (X, y, clf, preprocessing_local, return_str=True):
     else:
         y_test_fold_binarized = y_test_fold
 
-    #metrics["ROC AUC"].append(roc_auc_score(y_test_fold_binarized, clf.predict(X_test_fold), average='weighted', multi_class='ovr'))
-
     metrics["PR Score"].append(precision_score(y_test_fold, y_pred_fold, average='weighted', zero_division=1))
 
     metrics["Balanced Accuracy"].append(balanced_accuracy_score(y_test_fold, y_pred_fold))
 
-  for metric, values in metrics.items():
+  #for metric, values in metrics.items():
     #print(f"{metric}: {np.round(np.mean(values), 3)} ± {np.round(np.std(values), 3)}")
-    if return_str:
-       return {metric: f"{np.round(np.mean(values), 3)} ± {np.round(np.std(values), 3)}" for metric, values in metrics.items()}
-    else:
-       return {metric: np.mean(values) for metric, values in metrics.items()}
+  if return_str:
+      return {metric: f"{np.round(np.mean(values), 3)} ± {np.round(np.std(values), 3)}" for metric, values in metrics.items()}
+  else:
+      return {metric: np.mean(values) for metric, values in metrics.items()}
