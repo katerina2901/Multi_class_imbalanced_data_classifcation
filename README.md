@@ -14,6 +14,9 @@ The goal of this project is to conduct experiments aimed at improving the perfor
 - Studying the effect of preprocessing operators on the performance of bousting algorithms
 - Implementation of combined ensemble methods using data-level sampling techniques
 
+## Datasets 
+All dataset from [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/) should be pre-processed with ```dataset_loader.py```. 
+
 ## Presentations
 [Project presentation](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/report/presentation.pdf) - official report on this project by our team.
 
@@ -51,8 +54,6 @@ ML_Project
 ├── README.md
 └── dataset_loader.py # function for loading dataset from UCI Machine Learning Repository
 ```
-## Datasets 
-All dataset from [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/) should be pre-processed with ```dataset_loader.py```. 
 
 ## Requirements
 ```!pip install ucimlrepo```
