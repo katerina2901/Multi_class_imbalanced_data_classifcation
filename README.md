@@ -4,10 +4,18 @@ This repository contains code for Final Project of ML Course in Skoltech.
 To run this code and reproduce results you need install these packages and libraries, you should use Python 3.10.
 
 ## Project description 
-Explore methods for improving the performance of boosting algorithms in multi-label classification tasks, especially handling unbalanced datasets. 
+Learning on skewed datasets becomes very important since many real-world classification tasks are usually unbalanced. Multiclass unbalanced learning is even more challenging than binary scenarios and remains an open problem. Busting algorithms that improve model performance by combining underlying learners face difficulties in obtaining good predictions on large unbalanced multiclass datasets. 
+The goal of this project is to conduct experiments aimed at improving the performance of Boosting algorithms in multi-class classification tasks. The main contribution of this report is the experiments:
+
+- Base-Line Implementation
+  
+  In this [expirement](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py) we used base estimators such as : Desicion Tree Regressor, Desicion Tree Classifier, Extra Tree Classifier, Support Vector Classifier and Logistic Regression.
+- Studying the influence of base learners within the bousting procedure
+- Studying the effect of preprocessing operators on the performance of bousting algorithms
+- Implementation of combined ensemble methods using data-level sampling techniques
 
 ## Presentations
-[Project presentation](https://docs.google.com/presentation/d/1oxwzHTHZcKOx6UTRPLHiuyml_b9V-wnnT7GAfO96uL8/edit#slide=id.p1) - official report on this project by our team.
+[Project presentation](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/report/presentation.pdf) - official report on this project by our team.
 
 ## Repository structure
 ```
@@ -34,12 +42,14 @@ ML_Project
 │   ├── presentation.pdf
 │   └── report.pdf
 ├── results # results of expirements
-│   ├── baseline_experiment.csv
-│   ├── 1st_experiment_base_estimators.csv
-│   ├── 2nd_experiment_preprocessing.csv
-│   └── 3st_experiment_resampling.txt
-├── dataset_loader.py # function for loading dataset from UCI Machine Learning Repository
-└── README.md
+│   ├── 1st_experiment_base_estimators.csv # contain 1st_experiment best results for all datasets
+│   ├── 2nd_experiment_preprocessors.csv # contain 2st_experiment all results for all datasets
+│   ├── 3rd_experiment_resampling.csv # contain 3 st_experiment all results for all datasets
+│   ├── baseline_best_algorithms.csv # contain baseline best results for all datasets
+│   ├── baseline_experiment.csv # contain baseline results for models without hyperparameter tuning
+│   └── best_algorithm_preprocessor_summary.csv # contain 3 st_experiment best results for all datasets
+├── README.md
+└── dataset_loader.py # function for loading dataset from UCI Machine Learning Repository
 ```
 ## Datasets 
 All dataset from [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/) should be pre-processed with ```dataset_loader.py```. 
