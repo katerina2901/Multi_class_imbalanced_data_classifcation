@@ -8,9 +8,9 @@ Learning on skewed datasets becomes very important since many real-world classif
 The goal of this project is to conduct experiments aimed at improving the performance of Boosting algorithms in multi-class classification tasks. The main contribution of this report is the experiments:
 
 - Base-Line Implementation
-  
-  In this [expirement](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py) we used base estimators such as : Desicion Tree Regressor, Desicion Tree Classifier, Extra Tree Classifier, Support Vector Classifier and Logistic Regression.
 - Studying the influence of base learners within the bousting procedure
+
+In this [expirement](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py) we used base estimators such as : Desicion Tree Regressor, Desicion Tree Classifier, Extra Tree Classifier, Support Vector Classifier and Logistic Regression. For each algorithm, the base estimator with the best hyper parameters was selected using ParameterGrid. 
 - Studying the effect of preprocessing operators on the performance of bousting algorithms
 - Implementation of combined ensemble methods using data-level sampling techniques
 
