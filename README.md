@@ -8,11 +8,17 @@ Learning on skewed datasets becomes very important since many real-world classif
 The goal of this project is to conduct experiments aimed at improving the performance of Boosting algorithms in multi-class classification tasks. The main contribution of this report is the experiments:
 
 - Base-Line Implementation
+
+As a baseline all considered boosting algorithms were used with default hypo-parameters. To estimate the performance of each algorithm  such metrics were used as: Precision, Recall, F1, 	G-mean (Geometric Mean of Sensitivity and Specificity), MMCC (Multi- class Matthews Correlation Coefficient), Kappa, Weighted Accuracy, PR Score, Balanced Accuracy.
 - Studying the influence of base learners within the bousting procedure
 
 In this [expirement](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py) we used base estimators such as : Desicion Tree Regressor, Desicion Tree Classifier, Extra Tree Classifier, Support Vector Classifier and Logistic Regression. For each algorithm, the base estimator with the best hyper parameters was selected using ParameterGrid. 
 - Studying the effect of preprocessing operators on the performance of bousting algorithms
+
+[Preprocessing]([https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py)](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/2st_experiment_preprocessors.py) employs several boosting models, including `LogitBoost`, `MEBoost`, `AdaBoost`, `RUSBoost`, and `GradientBoostingClassifier`, to iteratively improve predictions by focusing on previous errors. 
 - Implementation of combined ensemble methods using data-level sampling techniques
+In the [expirement]([https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/Experiment_3_resampling.ipynb))  we tried to improve the performance of boosting algorithms by balancing classes using various resampling techniques like Random oversampling, Borderline SMOTE, Random undersampling, NearMiss-1, CondensedNearestNeighbour, EditedNearestNeighbours, RepeatedEditedNearestNeighbours, ALLKNN, OneSidedSelection and NeighborhoodCleaningRule.
+  
 
 ## Datasets 
 All dataset from [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/) should be pre-processed with ```dataset_loader.py```. 
