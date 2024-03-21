@@ -17,7 +17,7 @@ In this [expirement](https://github.com/katerina2901/Multi_class_imbalanced_data
 
 [Preprocessing]([https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py)](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/2st_experiment_preprocessors.py) employs several boosting models, including `LogitBoost`, `MEBoost`, `AdaBoost`, `RUSBoost`, and `GradientBoostingClassifier`, to iteratively improve predictions by focusing on previous errors. 
 - Implementation of combined ensemble methods using data-level sampling techniques
-In the [expirement]([https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/1st_experiment_base_learners.py](https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/Experiment_3_resampling.ipynb))  we tried to improve the performance of boosting algorithms by balancing classes using various resampling techniques like Random oversampling, Borderline SMOTE, Random undersampling, NearMiss-1, CondensedNearestNeighbour, EditedNearestNeighbours, RepeatedEditedNearestNeighbours, ALLKNN, OneSidedSelection and NeighborhoodCleaningRule.
+In the [expirement]([https://github.com/katerina2901/Multi_class_imbalanced_data_classifcation/blob/main/Experiments/Experiment_3_resampling.ipynb])  we tried to improve the performance of boosting algorithms by balancing classes using various resampling techniques like Random oversampling, Borderline SMOTE, Random undersampling, NearMiss-1, CondensedNearestNeighbour, EditedNearestNeighbours, RepeatedEditedNearestNeighbours, ALLKNN, OneSidedSelection and NeighborhoodCleaningRule.
   
 
 ## Datasets 
