@@ -47,7 +47,7 @@ ML_Project
 ├── results # results of expirements
 │   ├── 1st_experiment_base_estimators.csv # contain 1st_experiment best results for all datasets
 │   ├── 2nd_experiment_preprocessors.csv # contain 2st_experiment all results for all datasets
-│   ├── 3rd_experiment_resampling.csv # contain 3 st_experiment all results for all datasets
+│   ├──  3rd_experiment-preprocessors_all.zip # contain 3rd_experiment all results for all datasets
 │   ├── baseline_best_algorithms.csv # contain baseline best results for all datasets
 │   ├── baseline_experiment.csv # contain baseline results for models without hyperparameter tuning
 │   └── best_algorithm_preprocessor_summary.csv # contain 3 st_experiment best results for all datasets
